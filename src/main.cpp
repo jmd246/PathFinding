@@ -25,9 +25,29 @@ void processInput(GLFWwindow* window) {
 int main(){
     //initialize glfw
     Graph g;
-    g.addEdge("Lumbridge", "Varrock");
-    g.addEdge("Varrock", "Falador");
-    g.addEdge("Lumbridge" , "Falador");
+    g.addEdge("a", "b");
+    g.addEdge("a", "f");
+
+    g.addEdge("b", "g");
+    g.addEdge("b", "c");
+
+    g.addEdge("c", "e");
+    g.addEdge("c", "d");
+
+    g.addEdge("d", "g");
+    g.addEdge("d", "e");
+    
+    g.addEdge("e" , "f");
+    
+    g.addEdge("f", "g");
+   
+
+
+
+
+
+
+
     GraphDrawer graphUI(g);
 
 

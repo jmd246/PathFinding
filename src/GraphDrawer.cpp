@@ -19,7 +19,7 @@ void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions) {
 	//draw nodes
 	for (const auto& [id,pos] : positions) {
 		ImVec2 drawPos(pos.x + windowPos.x, pos.y + windowPos.y);
-		draw->AddCircleFilled(drawPos, 50.0f, IM_COL32(100, 200, 255, 255));
+		draw->AddCircleFilled(drawPos, 20.0f, IM_COL32(100, 200, 255, 255));
 
 		ImFont* font = ImGui::GetFont();
 		ImVec2 textSize = font->CalcTextSizeA(font->FontSize, FLT_MAX, 0.0f, id.c_str());
