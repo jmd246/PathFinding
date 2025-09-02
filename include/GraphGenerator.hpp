@@ -11,7 +11,7 @@ class GraphGenerator
 		int weight = 1;
 	};
 public:
-	void generateGraph(GraphDrawer& graphUI);
+	bool generateGraph(GraphDrawer& graphUI);
 private:
 	bool graph_ready;
 	int m_num_vertices = 0;

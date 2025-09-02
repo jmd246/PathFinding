@@ -1,5 +1,7 @@
 #include <GraphDrawer.hpp>
-GraphDrawer::GraphDrawer(Graph& g, float radius, float size) : graph(g), m_node_radius(radius), m_graph_size(size) {}
+GraphDrawer::GraphDrawer(Graph& g, float radius, float size) : graph(g), m_node_radius(radius), m_graph_size(size) {
+	showResizeButton = false;
+}
 
 void GraphDrawer::drawGraphResizeButton() {
 	float newSize = m_graph_size;
@@ -9,7 +11,7 @@ void GraphDrawer::drawGraphResizeButton() {
 
 void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions) {
 	drawGraphResizeButton();		
-	//get window offset
+ 	//get window offset
 	ImVec2 windowPos = ImGui::GetWindowPos(); // top-left of this ImGui window
 	//batch drawing commands in imguidrawlist
 	ImDrawList* draw = ImGui::GetWindowDrawList();
@@ -45,7 +47,9 @@ void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions) {
 
 				//add edge weights 
 				ImVec2 mid = (fromPos + toPos) * 0.5f;
-				mid = mid + (perp * 10.0f);
+				mid = mid + perp * m_weight_offset;
+
+			
 				char buf[16];
 				snprintf(buf, sizeof(buf), "%d", edge.weight);
 				draw->AddText(mid, IM_COL32(255,255, 0, 255), buf);

@@ -121,7 +121,9 @@ int main(){
             graphUI.drawGraph();
         }
         if (showCreateNewGraph) {
-            generator.generateGraph(graphUI);
+            if (generator.generateGraph(graphUI)) {
+                showGraphWindow = true;
+            }
         }
         ImGui::End();
         processInput(window);
