@@ -1,11 +1,25 @@
 #include <GraphGenerator.hpp>
 
+void GraphGenerator::listVertices(const std::set<std::string>& allowedVertices) const {
+	if (allowedVertices.size() == 0) return;
+	
+	std::string names;
+	int i = 0;
 
-
-void GraphGenerator::GenerateGraph(GraphDrawer& graphUI) {
+	for (std::string name: allowedVertices) {
+		if (i < allowedVertices.size() - 1) {
+			names += (name + ", ") ;
+		}
+		else {
+			names += name;
+		}
+		i++;
+	}
+	ImGui::Text(names.c_str());
+}
+void GraphGenerator::generateGraph(GraphDrawer& graphUI) {
 	graph_ready = true;
 	ImGui::Begin("Create Graph");
-
 	ImGui::InputInt("Number of vertices", &m_num_vertices);
 	ImGui::Checkbox("Directed", &isDirected);
 	if (isDirected) {
@@ -19,7 +33,8 @@ void GraphGenerator::GenerateGraph(GraphDrawer& graphUI) {
 		std::string name = std::string(1, 'a' + i); // or ask user input
 		allowedVertices.insert(name);
 	}
-
+	//show list of vertices
+	listVertices(allowedVertices);
 
 	// Buttons to add/remove edges dynamically
 	if (ImGui::Button("Add Edge") && edges.size() < m_max_edges) {
@@ -55,6 +70,8 @@ void GraphGenerator::GenerateGraph(GraphDrawer& graphUI) {
 		}
 		// Assign or update GraphDrawer
 		graphUI.setGraph(customGraph);
+		//load graph
+		graphUI.drawGraph();
 	}
 	if (ImGui::Button("Reset Edge List")) {
 		edges.clear();

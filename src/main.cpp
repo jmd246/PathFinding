@@ -121,8 +121,7 @@ int main(){
             graphUI.drawGraph();
         }
         if (showCreateNewGraph) {
-            generator.GenerateGraph(graphUI);
-            graphUI.drawGraph();
+            generator.generateGraph(graphUI);
         }
         ImGui::End();
         processInput(window);

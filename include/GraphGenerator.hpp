@@ -11,8 +11,7 @@ class GraphGenerator
 		int weight = 1;
 	};
 public:
-	void GenerateGraph(GraphDrawer& graphUI);
-	
+	void generateGraph(GraphDrawer& graphUI);
 private:
 	bool graph_ready;
 	int m_num_vertices = 0;
@@ -20,6 +19,10 @@ private:
 	std::vector<EdgeInput> edges;
 	// state variables
 	bool isDirected = false;
+
+	//function to display set of names for vertices
+	void listVertices(const std::set<std::string>& allowedVertices ) const;
+
 };
 
 
