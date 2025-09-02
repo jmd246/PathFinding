@@ -1,19 +1,41 @@
 #include <GraphDrawer.hpp>
-GraphDrawer::GraphDrawer(Graph& g) : graph(g) {}
+GraphDrawer::GraphDrawer(Graph& g) : graph(g),m_node_radius(20) {}
 void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions) {
 	//get window offset
 	ImVec2 windowPos = ImGui::GetWindowPos(); // top-left of this ImGui window
 	//batch drawing commands in imguidrawlist
 	ImDrawList* draw = ImGui::GetWindowDrawList();
 	//draw edges
-	for (const auto& [u, neighbors] : graph.m_adj_list) {
-		for (const auto& v : neighbors) {
-			draw->AddLine(
-				ImVec2( positions.at(u).x + windowPos.x, positions.at(u).y + windowPos.y),
-				ImVec2(positions.at(v).x + windowPos.x, positions.at(v).y + windowPos.y),
-				IM_COL32(200, 200, 200, 255),
-				2.0f
-			);
+	for (const auto& [from, neighbors] : graph.m_adj_list) {
+		if (!positions.count(from)) continue;
+
+		ImVec2 fromPos = ImVec2(positions.at(from).x +  windowPos.x , positions.at(from).y + windowPos.y);
+
+		for (const auto& edge : neighbors) {
+			    //skip if missing a positon
+				if (!positions.count(edge.to)) continue;
+				ImVec2 toPos = ImVec2(positions.at(edge.to).x + windowPos.x, positions.at(edge.to).y + windowPos.y);
+				draw->AddLine(fromPos, toPos, IM_COL32(200, 200, 200, 255), 2.0f);
+				ImVec2 perp;
+				if (graph.isDirected()) {
+					ImVec2 direction = toPos - fromPos;
+					float len = sqrtf(direction.x * direction.x + direction.y * direction.y);
+					//normalize
+					direction.x /= len; direction.y /= len;
+					perp = ImVec2(-direction.y, direction.x);
+					float arrowSize = 10.0f;
+					ImVec2 tip = toPos - (direction * m_node_radius);
+					ImVec2 left = tip - direction * arrowSize + perp * (0.5f * arrowSize);
+					ImVec2 right = tip - direction * arrowSize - perp * (0.5f * arrowSize);
+					draw->AddTriangleFilled(tip, left + ImVec2(1,1), right - ImVec2(1, 1), IM_COL32(200, 200, 200, 255));
+				}
+
+				//add edge weights 
+				ImVec2 mid = (fromPos + toPos) * 0.5f;
+				mid = mid + perp * 12.0f;
+				char buf[16];
+				snprintf(buf, sizeof(buf), "%d", edge.weight);
+				draw->AddText(mid, IM_COL32(255,255, 255, 255), buf);
 		}
 	}
 	//draw nodes

@@ -26,7 +26,7 @@ add_executable(PathFinding
     src/main.cpp
     src/Graph.cpp
     src/GraphDrawer.cpp
-)
+  src/GraphGenerator.cpp)
 
 # Link dependencies
 target_link_libraries(PathFinding PRIVATE

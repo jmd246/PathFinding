@@ -6,6 +6,7 @@
 #include <iostream>
 #include <Graph.hpp>
 #include <GraphDrawer.hpp>
+#include <GraphGenerator.hpp>
 void resizeWindowCallBack(GLFWwindow* window, int w, int h) {
     if (window == nullptr) return;
     glViewport(0, 0, w, h);
@@ -18,30 +19,32 @@ void processInput(GLFWwindow* window) {
 }
 
 
-
-
-
-
+static bool showGraphWindow = false, showCreateNewGraph;
 int main(){
     //initialize glfw
-    Graph g;
-    g.addEdge("a", "b");
-    g.addEdge("a", "f");
+    Graph g(true);
+    g.addEdge("b", "a", 9 );
+    g.addEdge("f", "a",3);
 
-    g.addEdge("b", "g");
-    g.addEdge("b", "c");
+    g.addEdge("e", "f",8);
+    g.addEdge("g", "f",1);
 
-    g.addEdge("c", "e");
-    g.addEdge("c", "d");
+    g.addEdge("c", "e",1);
+    g.addEdge("d", "e",1);
 
-    g.addEdge("d", "g");
-    g.addEdge("d", "e");
+    g.addEdge("d", "g",4);
+    g.addEdge("b", "g",2);
     
-    g.addEdge("e" , "f");
+    g.addEdge("c" , "b",8);
     
-    g.addEdge("f", "g");
+    g.addEdge("c", "d",2);
    
-
+      g.addEdge("g", "i",4);
+    g.addEdge("i", "a",2);
+    
+    g.addEdge("i" , "b",8);
+    
+    g.addEdge("i", "d",2);
 
 
 
@@ -49,7 +52,7 @@ int main(){
 
 
     GraphDrawer graphUI(g);
-
+    GraphGenerator generator;
 
     
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -91,22 +94,38 @@ int main(){
     ImGui_ImplOpenGL3_Init("#version 330");
 
 
-    
+    int scr_width, scr_height;
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
        
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        glfwGetFramebufferSize(window, &scr_width, &scr_height);
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar;
+        ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
+        ImGui::SetNextWindowSize(ImVec2(scr_width, scr_height), ImGuiCond_Always);
 
-        ImGui::SetWindowPos(ImVec2(0, 0), 0);
-        ImGui::SetNextWindowSize(ImVec2(800, 600),0);
-        ImGui::Begin("Construct Graph");
-        graphUI.drawGraph();
+        ImGui::Begin("Main Menu",nullptr,window_flags);
+
+        if (ImGui::BeginMenuBar()){
+            if (ImGui::Button("Load Graph")) {
+                showGraphWindow = !showGraphWindow;
+            }
+            if (ImGui::Button("New Graph")) {
+                showCreateNewGraph = !showCreateNewGraph;
+            }
+            ImGui::EndMenuBar();
+        }       
+        if (showGraphWindow) {
+            graphUI.drawGraph();
+        }
+        if (showCreateNewGraph) {
+            generator.GenerateGraph(graphUI);
+            graphUI.drawGraph();
+        }
         ImGui::End();
-
-
-       
         processInput(window);
         ImGui::Render();
         
