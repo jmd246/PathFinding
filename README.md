@@ -33,30 +33,44 @@ This project provides a simple **ImGui-based UI** for graph creation and editing
   - Graph coloring  
 
 ---
-## RoadMap
-Basic ImGui UI with menu bar
-	•	Graph class with adjacency list & duplicate prevention
-	•	Input validation for vertices & edges
-	•	Save/load graphs with JSON
-	•	Dijkstra’s shortest path visualization
-	•	Prim’s MST visualization
-	•	Kruskal’s MST visualization
-	•	A* pathfinding visualization
-	•	Graph coloring visualization
-	•	Step-by-step algorithm animations
-	•	Export graphs to image format
+## Roadmap
+- **Basic ImGui UI with menu bar**
+- **Graph class**
+  - Adjacency list implementation
+  - Duplicate prevention for vertices and edges
+- **Input validation**
+  - For vertices and edges
+- **Graph persistence**
+  - Save/load graphs using JSON
+- **Algorithm visualizations**
+  - Dijkstra’s shortest path
+  - Prim’s Minimum Spanning Tree (MST)
+  - Kruskal’s MST
+  - A* pathfinding
+  - Graph coloring
+- **Animations**
+  - Step-by-step algorithm execution
+- **Export**
+  - Export graphs to image formats
+
 ---
+
 ## Usage
-  1.	Launch the application
-      Build and run the project using your preferred C++ compiler and build system.
-	2.	Create a graph
-	    •	Open the menu bar.
-	    •	Use the form to add vertices and edges (with weights).
-	3.	Visualize & edit
-	    •	Interact with the graph nodes and edges in the ImGui interface.
-	    •	Modify or remove edges and vertices.
-	4.	Run algorithms (future)
-	    •	Select algorithms like Dijkstra or A* from the menu to visualize step-by-step execution.
+
+1. **Launch the application**  
+   Build and run the project using your preferred C++ compiler and build system.
+
+2. **Create a graph**  
+   - Open the menu bar.  
+   - Use the form to add vertices and edges (with weights).
+
+3. **Visualize & edit**  
+   - Interact with graph nodes and edges in the ImGui interface.  
+   - Modify or remove edges and vertices as needed.
+
+4. **Run algorithms (future)**  
+   - Select algorithms such as Dijkstra or A* from the menu to visualize step-by-step execution.
+
 
 ## Installation
 
