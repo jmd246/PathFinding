@@ -33,6 +33,30 @@ This project provides a simple **ImGui-based UI** for graph creation and editing
   - Graph coloring  
 
 ---
+## RoadMap
+Basic ImGui UI with menu bar
+	•	Graph class with adjacency list & duplicate prevention
+	•	Input validation for vertices & edges
+	•	Save/load graphs with JSON
+	•	Dijkstra’s shortest path visualization
+	•	Prim’s MST visualization
+	•	Kruskal’s MST visualization
+	•	A* pathfinding visualization
+	•	Graph coloring visualization
+	•	Step-by-step algorithm animations
+	•	Export graphs to image format
+---
+## Usage
+  1.	Launch the application
+      Build and run the project using your preferred C++ compiler and build system.
+	2.	Create a graph
+	    •	Open the menu bar.
+	    •	Use the form to add vertices and edges (with weights).
+	3.	Visualize & edit
+	    •	Interact with the graph nodes and edges in the ImGui interface.
+	    •	Modify or remove edges and vertices.
+	4.	Run algorithms (future)
+	    •	Select algorithms like Dijkstra or A* from the menu to visualize step-by-step execution.
 
 ## Installation
 
@@ -48,5 +72,7 @@ vcpkg install nlohmann-json
 
 # (Optional) integrate vcpkg with your system
 vcpkg integrate install
----
-## RoadMap
+
+
+
+
