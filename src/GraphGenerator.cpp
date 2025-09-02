@@ -8,7 +8,12 @@ void GraphGenerator::GenerateGraph(GraphDrawer& graphUI) {
 
 	ImGui::InputInt("Number of vertices", &m_num_vertices);
 	ImGui::Checkbox("Directed", &isDirected);
-	m_max_edges = m_num_vertices * (m_num_vertices - 1) / 2;
+	if (isDirected) {
+		m_max_edges = m_num_vertices * (m_num_vertices - 1);
+	}
+	else {
+		m_max_edges = m_num_vertices * (m_num_vertices - 1) / 2;
+	}
 	std::set<std::string> allowedVertices;
 	for (int i = 0; i < m_num_vertices; i++) {
 		std::string name = std::string(1, 'a' + i); // or ask user input

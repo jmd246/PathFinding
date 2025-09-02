@@ -19,34 +19,31 @@ void processInput(GLFWwindow* window) {
         glfwSetWindowShouldClose(window, true);
     }
 }
+Graph SampleGraph(bool isDirected) {
+    Graph g(true);
+    g.addEdge("b", "a", 9);
+    g.addEdge("f", "a", 3);
+    g.addEdge("e", "f", 8);
+    g.addEdge("g", "f", 1);
+    g.addEdge("c", "e", 1);
+    g.addEdge("d", "e", 1);
+    g.addEdge("d", "g", 4);
+    g.addEdge("b", "g", 2);
+    g.addEdge("c", "b", 8);
+    g.addEdge("c", "d", 2);
+    g.addEdge("g", "i", 4);
+    g.addEdge("i", "a", 2);
+    g.addEdge("i", "b", 8);
+    g.addEdge("i", "d", 2);
+    return g;
+}
 
 
 static bool showGraphWindow = false, showCreateNewGraph;
 int main(){
     //initialize glfw
-    Graph g(true);
-    g.addEdge("b", "a", 9 );
-    g.addEdge("f", "a",3);
-
-    g.addEdge("e", "f",8);
-    g.addEdge("g", "f",1);
-
-    g.addEdge("c", "e",1);
-    g.addEdge("d", "e",1);
-
-    g.addEdge("d", "g",4);
-    g.addEdge("b", "g",2);
+    Graph g = SampleGraph(true);
     
-    g.addEdge("c" , "b",8);
-    
-    g.addEdge("c", "d",2);
-   
-      g.addEdge("g", "i",4);
-    g.addEdge("i", "a",2);
-    
-    g.addEdge("i" , "b",8);
-    
-    g.addEdge("i", "d",2);
 
 
 
@@ -147,3 +144,4 @@ int main(){
     ImGui::DestroyContext();
     return 0;
 }
+
