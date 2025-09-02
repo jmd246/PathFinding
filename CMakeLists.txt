@@ -19,20 +19,25 @@ set(CMAKE_TOOLCHAIN_FILE
 find_package(glfw3 CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(glad CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 
 
 # Executable
-add_executable(PathFinding
+add_executable (
+    PathFinding
     src/main.cpp
     src/Graph.cpp
     src/GraphDrawer.cpp
-  src/GraphGenerator.cpp)
+    src/GraphGenerator.cpp
+)
 
 # Link dependencies
 target_link_libraries(PathFinding PRIVATE
     glfw
     imgui::imgui
     glad::glad
+    nlohmann_json::nlohmann_json
 )
 
  target_include_directories(PathFinding PRIVATE include)

@@ -1,4 +1,5 @@
 #include <glad/glad.h>
+#include <nlohmann/json.hpp>
 #include <imgui.h>
 #include<GLFW/glfw3.h>
 #include<imgui_impl_opengl3.h>
@@ -7,6 +8,7 @@
 #include <Graph.hpp>
 #include <GraphDrawer.hpp>
 #include <GraphGenerator.hpp>
+
 void resizeWindowCallBack(GLFWwindow* window, int w, int h) {
     if (window == nullptr) return;
     glViewport(0, 0, w, h);
