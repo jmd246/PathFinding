@@ -1,0 +1,14 @@
+{
+    "adj_list": {
+        "a": [
+            {
+                "from": "a",
+                "to": "b",
+                "weight": 1
+            }
+        ],
+        "b": []
+    },
+    "directed": true,
+    "num_edges": 1
+}

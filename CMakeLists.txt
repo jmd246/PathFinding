@@ -13,6 +13,10 @@ set(CMAKE_TOOLCHAIN_FILE
     CACHE STRING "Vcpkg toolchain file"
 )
 
+set(PROJECT_ROOT_DIR "${CMAKE_SOURCE_DIR}")
+configure_file(config.h.in config.h)  # Generates config.h in the build folder
+include_directories(${CMAKE_BINARY_DIR})
+
 
 
 # Find packages installed with vcpkg
@@ -32,7 +36,7 @@ add_executable (
     src/GraphGenerator.cpp
     src/GraphFileManager.cpp
     vendors/ImGuiFileDialog/ImGuiFileDialog.cpp
-)
+ )
 
 # Link dependencies
 target_link_libraries(PathFinding PRIVATE

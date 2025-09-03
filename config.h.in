@@ -1,0 +1,4 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+#define PROJECT_ROOT_DIR "@PROJECT_ROOT_DIR@"
+#endif

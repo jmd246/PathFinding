@@ -40,7 +40,7 @@ Graph SampleGraph(bool isDirected) {
 }
 
 
-static bool showGraphWindow = false, showCreateNewGraph = false, showFileBrowser = false;
+static bool showGraphWindow = false, showCreateNewGraph = false, showFileBrowser = false, showSaveDialog;
 int main(){
     //initialize glfw
     Graph g = SampleGraph(true);
@@ -49,7 +49,6 @@ int main(){
 
     GraphDrawer graphUI(g);
     GraphGenerator generator;
-
     
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -79,7 +78,6 @@ int main(){
 
         return -1;
     }
-
     // Setup ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -107,46 +105,42 @@ int main(){
 
         if (ImGui::BeginMenuBar()){
             if (ImGui::Button("Load Graph")) {
+                ImGui::SetWindowFocus("Load Graph");
+                showGraphWindow = true;
+                showSaveDialog = false;
                 manager.triggerLoadDialog();
-                showGraphWindow = !showGraphWindow;
             }
             if (ImGui::Button("New Graph")) {
-                showCreateNewGraph = !showCreateNewGraph;
+                ImGui::SetNextWindowPos(ImVec2(0, 100), ImGuiCond_Always);
+                ImGui::SetNextWindowSize(ImVec2(scr_width * 0.5f, scr_height * 0.5f));
+                showCreateNewGraph = true;
+            }
+            if (ImGui::Button("Save Graph")  && graphUI.getGraph().isValid()) {
+                showCreateNewGraph = false;
+                ImGui::SetWindowFocus("Save Graph");
+                g = graphUI.getGraph();
+                manager.triggerSaveDialog();
+                
             }
             ImGui::EndMenuBar();
-        }       
-        
-        if (showGraphWindow) {
+        }
 
-            ImGui::Checkbox("Open Existing Graph", &showFileBrowser);
-            if (showFileBrowser) {
-                Graph tempGraph;
-                manager.processLoadDialog(tempGraph);
-                if (tempGraph.isValid()) {
-                    graphUI.setGraph(tempGraph);
-                }
-            }
-            //load graph then draw
+        if (graphUI.getGraph().isValid()) {
             graphUI.drawGraph();
-        }
-        if (showCreateNewGraph) {
-            if (generator.generateGraph(graphUI,manager)) {
-                showGraphWindow = true;
+            if (showCreateNewGraph) {
+                generator.generateGraph(graphUI, manager,showCreateNewGraph);
             }
         }
+        manager.processLoadDialog(g);
+        manager.processSaveDialog(&g);
         ImGui::End();
         processInput(window);
         ImGui::Render();
-        
-       
-
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
     }
-    
-
     glfwDestroyWindow(window);
     glfwTerminate();
     ImGui_ImplOpenGL3_Shutdown();

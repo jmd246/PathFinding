@@ -2,10 +2,18 @@
 
 // Open dialogs
 void GraphFileManager::triggerLoadDialog() {
-    ImGuiFileDialog::Instance()->OpenDialog("LoadGraphDlg", "Load Graph", ".json");
+    // Close Save dialog if open
+    if (ImGuiFileDialog::Instance()->IsOpened("SaveGraphDlg"))
+        ImGuiFileDialog::Instance()->Close();
+  
+    ImGuiFileDialog::Instance()->OpenDialog("LoadGraphDlg", "Load Graph", ".json",config);
 }
 void GraphFileManager::triggerSaveDialog() {
-    ImGuiFileDialog::Instance()->OpenDialog("SaveGraphDlg", "Save Graph", ".json");
+    // Close Load dialog if open
+    if (ImGuiFileDialog::Instance()->IsOpened("LoadGraphDlg"))
+        ImGuiFileDialog::Instance()->Close();
+
+    ImGuiFileDialog::Instance()->OpenDialog("SaveGraphDlg", "Save Graph", ".json",config);
 }
 void GraphFileManager::processLoadDialog(Graph& graph) {
     if (ImGuiFileDialog::Instance()->Display("LoadGraphDlg")) {

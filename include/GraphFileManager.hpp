@@ -3,7 +3,10 @@
 #include <nlohmann/json.hpp>
 #include <Graph.hpp>
 #include <ImGuiFileDialog.h>
+#include <ImGuiFileDialogConfig.h>
 #include <fstream>
+#include <filesystem>
+#include<config.h>
 
 using json = nlohmann::json;
 
@@ -29,8 +32,23 @@ namespace nlohmann {
 class GraphFileManager {
 
 private:
+    IGFD::FileDialogConfig config;
 
+    static std::string GetAssetsPath()
+    {
+        // Get current working directory
+        std::filesystem::path assets(PROJECT_ROOT_DIR);
+
+        // Append your assets/res folder
+        assets /= "assets";   // or "assets"
+
+        return assets.string(); // Convert to std::string
+    }
 public:
+    GraphFileManager() {
+        config.path = GetAssetsPath();
+    }
+
     // Open dialogs
     void triggerLoadDialog(); 
     void triggerSaveDialog(); 

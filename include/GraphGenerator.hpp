@@ -12,9 +12,10 @@ class GraphGenerator
 		int weight = 1;
 	};
 public:
-	bool generateGraph(GraphDrawer& graphUI, GraphFileManager& manager);
+	bool generateGraph(GraphDrawer& graphUI, GraphFileManager& manager,bool& showWindow);
 private:
 	bool graph_ready;
+
 	int m_num_vertices = 0;
 	int m_max_edges = 0;
 	std::vector<EdgeInput> edges;

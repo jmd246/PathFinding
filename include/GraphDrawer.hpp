@@ -34,9 +34,6 @@ public:
 		else if (size < MIN_GRAPH_SIZE) {
 			m_graph_size = MIN_GRAPH_SIZE;
 		}
-		else {
-			return;
-		}
 	}
 	Graph getGraph() { return graph; }
 	float getGraphSize() const { return m_graph_size; }

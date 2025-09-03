@@ -1,0 +1,91 @@
+{
+    "adj_list": {
+        "a": [],
+        "b": [
+            {
+                "from": "b",
+                "to": "a",
+                "weight": 9
+            },
+            {
+                "from": "b",
+                "to": "g",
+                "weight": 2
+            }
+        ],
+        "c": [
+            {
+                "from": "c",
+                "to": "b",
+                "weight": 8
+            },
+            {
+                "from": "c",
+                "to": "d",
+                "weight": 2
+            },
+            {
+                "from": "c",
+                "to": "e",
+                "weight": 1
+            }
+        ],
+        "d": [
+            {
+                "from": "d",
+                "to": "e",
+                "weight": 1
+            },
+            {
+                "from": "d",
+                "to": "g",
+                "weight": 4
+            }
+        ],
+        "e": [
+            {
+                "from": "e",
+                "to": "f",
+                "weight": 8
+            }
+        ],
+        "f": [
+            {
+                "from": "f",
+                "to": "a",
+                "weight": 3
+            }
+        ],
+        "g": [
+            {
+                "from": "g",
+                "to": "f",
+                "weight": 1
+            },
+            {
+                "from": "g",
+                "to": "i",
+                "weight": 4
+            }
+        ],
+        "i": [
+            {
+                "from": "i",
+                "to": "a",
+                "weight": 2
+            },
+            {
+                "from": "i",
+                "to": "b",
+                "weight": 8
+            },
+            {
+                "from": "i",
+                "to": "d",
+                "weight": 2
+            }
+        ]
+    },
+    "directed": true,
+    "num_edges": 14
+}
