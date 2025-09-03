@@ -2,6 +2,7 @@
 #define  GRAPH_GENERATOR_HPP 
 #include <ImGui.h>
 #include <GraphDrawer.hpp>
+#include <GraphFileManager.hpp>
 #include <vector>
 class GraphGenerator
 {
@@ -11,7 +12,7 @@ class GraphGenerator
 		int weight = 1;
 	};
 public:
-	bool generateGraph(GraphDrawer& graphUI);
+	bool generateGraph(GraphDrawer& graphUI, GraphFileManager& manager);
 private:
 	bool graph_ready;
 	int m_num_vertices = 0;

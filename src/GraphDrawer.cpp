@@ -26,7 +26,6 @@ void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions) {
 				if (!positions.count(edge.to)) continue;
 				ImVec2 toPos = ImVec2(positions.at(edge.to).x + windowPos.x, positions.at(edge.to).y + windowPos.y);
 				draw->AddLine(fromPos, toPos, IM_COL32(200, 200, 200, 255), 2.0f);
-				
 				ImVec2 perp;
 				ImVec2 direction = toPos - fromPos;
 				float len = sqrtf(direction.x * direction.x + direction.y * direction.y);
@@ -43,8 +42,9 @@ void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions) {
 					ImVec2 left = tip - direction * arrowSize + perp * (0.5f * arrowSize);
 					ImVec2 right = tip - direction * arrowSize - perp * (0.5f * arrowSize);
 					draw->AddTriangleFilled(tip, left, right , IM_COL32(200, 200, 200, 255));
+				
 				}
-
+				
 				//add edge weights 
 				ImVec2 mid = (fromPos + toPos) * 0.5f;
 				mid = mid + perp * m_weight_offset;

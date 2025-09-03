@@ -38,6 +38,7 @@ public:
 			return;
 		}
 	}
+	Graph getGraph() { return graph; }
 	float getGraphSize() const { return m_graph_size; }
 	void drawGraph();
 	GraphDrawer(Graph& g, float radius = MIN_NODE_RADIUS, float size = MIN_GRAPH_SIZE);

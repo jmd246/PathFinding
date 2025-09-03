@@ -1,0 +1,64 @@
+{
+    "adj_list": {
+        "a": [
+            {
+                "from": "a",
+                "to": "b",
+                "weight": 1
+            },
+            {
+                "from": "a",
+                "to": "c",
+                "weight": 1
+            },
+            {
+                "from": "a",
+                "to": "d",
+                "weight": 1
+            }
+        ],
+        "b": [
+            {
+                "from": "b",
+                "to": "a",
+                "weight": 1
+            },
+            {
+                "from": "b",
+                "to": "c",
+                "weight": 1
+            },
+            {
+                "from": "b",
+                "to": "d",
+                "weight": 1
+            }
+        ],
+        "c": [
+            {
+                "from": "c",
+                "to": "a",
+                "weight": 1
+            },
+            {
+                "from": "c",
+                "to": "b",
+                "weight": 1
+            }
+        ],
+        "d": [
+            {
+                "from": "d",
+                "to": "a",
+                "weight": 1
+            },
+            {
+                "from": "d",
+                "to": "c",
+                "weight": 1
+            }
+        ]
+    },
+    "directed": true,
+    "num_edges": 10
+}

@@ -1,5 +1,4 @@
 #include <glad/glad.h>
-#include <nlohmann/json.hpp>
 #include <imgui.h>
 #include<GLFW/glfw3.h>
 #include<imgui_impl_opengl3.h>
@@ -8,6 +7,8 @@
 #include <Graph.hpp>
 #include <GraphDrawer.hpp>
 #include <GraphGenerator.hpp>
+#include <GraphFileManager.hpp>
+
 
 void resizeWindowCallBack(GLFWwindow* window, int w, int h) {
     if (window == nullptr) return;
@@ -39,16 +40,12 @@ Graph SampleGraph(bool isDirected) {
 }
 
 
-static bool showGraphWindow = false, showCreateNewGraph;
+static bool showGraphWindow = false, showCreateNewGraph = false, showFileBrowser = false;
 int main(){
     //initialize glfw
     Graph g = SampleGraph(true);
     
-
-
-
-
-
+    GraphFileManager manager;
 
     GraphDrawer graphUI(g);
     GraphGenerator generator;
@@ -110,6 +107,7 @@ int main(){
 
         if (ImGui::BeginMenuBar()){
             if (ImGui::Button("Load Graph")) {
+                manager.triggerLoadDialog();
                 showGraphWindow = !showGraphWindow;
             }
             if (ImGui::Button("New Graph")) {
@@ -117,11 +115,22 @@ int main(){
             }
             ImGui::EndMenuBar();
         }       
+        
         if (showGraphWindow) {
+
+            ImGui::Checkbox("Open Existing Graph", &showFileBrowser);
+            if (showFileBrowser) {
+                Graph tempGraph;
+                manager.processLoadDialog(tempGraph);
+                if (tempGraph.isValid()) {
+                    graphUI.setGraph(tempGraph);
+                }
+            }
+            //load graph then draw
             graphUI.drawGraph();
         }
         if (showCreateNewGraph) {
-            if (generator.generateGraph(graphUI)) {
+            if (generator.generateGraph(graphUI,manager)) {
                 showGraphWindow = true;
             }
         }

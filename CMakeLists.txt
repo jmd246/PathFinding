@@ -30,6 +30,8 @@ add_executable (
     src/Graph.cpp
     src/GraphDrawer.cpp
     src/GraphGenerator.cpp
+    src/GraphFileManager.cpp
+    vendors/ImGuiFileDialog/ImGuiFileDialog.cpp
 )
 
 # Link dependencies
@@ -40,7 +42,9 @@ target_link_libraries(PathFinding PRIVATE
     nlohmann_json::nlohmann_json
 )
 
- target_include_directories(PathFinding PRIVATE include)
+ target_include_directories(PathFinding PRIVATE include
+         vendors/ImGuiFileDialog
+ )
  
 # Optional: For MSVC warnings
 if (MSVC)
