@@ -24,9 +24,11 @@ This project provides a simple **ImGui-based UI** for graph creation and editing
   - Prevents duplicate edges  
   - Ensures vertex/edge constraints are respected  
 - 📦 **Serialization** (WIP)  
-  - Using [nlohmann/json](https://github.com/nlohmann/json) for saving & loading graphs  
+  - Using [nlohmann/json](https://github.com/nlohmann/json) for saving & loading graphs
+
+- ⚡ **Algorithms (Implemented)**
+    - Dijkstra’s shortest path
 - ⚡ **Algorithms (Planned)**  
-  - Dijkstra’s shortest path  
   - Prim’s minimum spanning tree  
   - Kruskal’s minimum spanning tree  
   - A* pathfinding  
