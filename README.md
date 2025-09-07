@@ -28,6 +28,8 @@ This project provides a simple **ImGui-based UI** for graph creation and editing
 
 - ⚡ **Algorithms (Implemented)**
     - Dijkstra’s shortest path
+    <img width="1000" height="500" alt="Screenshot 2025-09-06" src="https://github.com/user-attachments/assets/a16b9402-1d54-49f5-bd62-2a0f55a197f5" />
+
 - ⚡ **Algorithms (Planned)**  
   - Prim’s minimum spanning tree  
   - Kruskal’s minimum spanning tree  
