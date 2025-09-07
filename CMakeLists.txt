@@ -35,8 +35,9 @@ add_executable (
     src/GraphDrawer.cpp
     src/GraphGenerator.cpp
     src/GraphFileManager.cpp
+    src/PathFinder.cpp
     vendors/ImGuiFileDialog/ImGuiFileDialog.cpp
- )
+)
 
 # Link dependencies
 target_link_libraries(PathFinding PRIVATE

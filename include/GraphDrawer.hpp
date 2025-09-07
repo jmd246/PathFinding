@@ -1,6 +1,7 @@
 #ifndef GRAPH_DRAWER_HPP
 #define GRAPH_DRAWER_HPP
 #include <Graph.hpp>
+#include <vector>
 #include <numbers>
 #include <ImGui.h>
 #include <map>
@@ -38,6 +39,9 @@ public:
 	Graph getGraph() { return graph; }
 	float getGraphSize() const { return m_graph_size; }
 	void drawGraph();
+	void drawGraph(std::set<std::pair<std::string, std::string>> paths);
+
+
 	GraphDrawer(Graph& g, float radius = MIN_NODE_RADIUS, float size = MIN_GRAPH_SIZE);
 	void setGraph(Graph& g) { graph = g; }
 private:
@@ -45,6 +49,7 @@ private:
 	bool showResizeButton;
 	float m_node_radius, m_graph_size;
 	void drawGraph(const std::map<std::string, ImVec2>& positions);
+	void drawGraph(const std::map<std::string, ImVec2>& positions, const std::set<std::pair<std::string,std::string>> path);
 	void drawGraphResizeButton();
 	std::map<std::string, ImVec2 > layoutCircle(ImVec2 center, float radius);
 	float m_weight_offset = 15.0f;

@@ -1,0 +1,42 @@
+{
+    "adj_list": {
+        "a": [
+            {
+                "from": "a",
+                "to": "b",
+                "weight": 1
+            },
+            {
+                "from": "a",
+                "to": "c",
+                "weight": 1
+            }
+        ],
+        "b": [
+            {
+                "from": "b",
+                "to": "a",
+                "weight": 1
+            },
+            {
+                "from": "b",
+                "to": "c",
+                "weight": 1
+            }
+        ],
+        "c": [
+            {
+                "from": "c",
+                "to": "a",
+                "weight": 1
+            },
+            {
+                "from": "c",
+                "to": "b",
+                "weight": 1
+            }
+        ]
+    },
+    "directed": false,
+    "num_edges": 3
+}

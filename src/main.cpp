@@ -8,6 +8,8 @@
 #include <GraphDrawer.hpp>
 #include <GraphGenerator.hpp>
 #include <GraphFileManager.hpp>
+#include <PathFinder.hpp>
+#include <imgui_stdlib.h>
 
 
 void resizeWindowCallBack(GLFWwindow* window, int w, int h) {
@@ -49,7 +51,9 @@ int main(){
 
     GraphDrawer graphUI(g);
     GraphGenerator generator;
-    
+    PathFinder pathfinder(g);
+   
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -90,6 +94,11 @@ int main(){
 
     int scr_width, scr_height;
 
+    bool showPathOutput = false;
+    std::string outputPath;
+    std::vector<std::string> path;
+    std::unordered_map<std::string, int> dist;
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
        
@@ -124,12 +133,58 @@ int main(){
             }
             ImGui::EndMenuBar();
         }
+        
+        static std::string start, end;
+        bool input[2] = { ImGui::InputText("start", &start),
+        ImGui::InputText("end", &end)
+        };
 
         if (graphUI.getGraph().isValid()) {
-            graphUI.drawGraph();
+
+            if (ImGui::Button("get path") && !start.empty() && !end.empty()) {
+                dist = pathfinder.dijkstra(start);
+                showPathOutput = true;
+                path = pathfinder.reconstructPath(start, end);
+                if (path.size() < 2) {
+                    outputPath = "no path from " + start + " to " + end;
+                    std::cout << outputPath;
+                    //ImGui::Text("no path from %s to %s", start, end);
+                }
+                else {
+                    outputPath = "";
+                    int i = 0;
+                    for (std::string node : path) {
+                        if (i < path.size() - 1) {
+                            outputPath += (node + ", ");
+                        }
+                        else {
+                            outputPath += node;
+                        }
+                        i++;
+                    }
+                    //ImGui::Text( "%s", pathOutput.c_str());
+                }
+            }
+
+
+            std::set<std::pair<std::string, std::string>> highlightedEdges;
+
+            for (size_t i = 0; i + 1 < path.size(); i++) {
+                highlightedEdges.insert({ path[i], path[i + 1] });
+            }
+            
+            graphUI.drawGraph(highlightedEdges);
+            pathfinder.setGraph(g);
             if (showCreateNewGraph) {
                 generator.generateGraph(graphUI, manager,showCreateNewGraph);
             }
+
+     
+        }
+       
+        if (showPathOutput) {
+            ImGui::Text("%s", outputPath.c_str());
+            ImGui::Text("%i", dist[end]);
         }
         manager.processLoadDialog(g);
         manager.processSaveDialog(&g);

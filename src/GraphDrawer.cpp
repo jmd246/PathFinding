@@ -66,9 +66,86 @@ void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions) {
 		draw->AddText(textPos, IM_COL32(0, 0, 0, 255), id.c_str());
 	}
 }
+
+void GraphDrawer::drawGraph(const std::map<std::string, ImVec2>& positions,const std::set<std::pair<std::string,std::string>> path) {
+	drawGraphResizeButton();
+	
+	//get window offset
+	ImVec2 windowPos = ImGui::GetWindowPos(); // top-left of this ImGui window
+	//batch drawing commands in imguidrawlist
+	ImDrawList* draw = ImGui::GetWindowDrawList();
+	//draw edges
+	for (const auto& [from, neighbors] : graph.m_adj_list) {
+		if (!positions.count(from)) continue;
+
+		ImVec2 fromPos = ImVec2(positions.at(from).x + windowPos.x, positions.at(from).y + windowPos.y);
+		for (const auto& edge : neighbors) {
+			//skip if missing a positon
+			if (!positions.count(edge.to)) continue;
+			ImVec2 toPos = ImVec2(positions.at(edge.to).x + windowPos.x, positions.at(edge.to).y + windowPos.y);
+			// check if this edge should be highlighted
+			bool isHighlighted = std::find(
+				path.begin(),
+				path.end(),
+				std::make_pair(from, edge.to)
+			) != path.end();
+
+			ImU32 color = isHighlighted ? IM_COL32(255, 255, 0, 255) : IM_COL32( 100 , 200, 200, 255);
+			
+			float thickness = isHighlighted ? 4.0f : 2.0f;
+			draw->AddLine(fromPos, toPos, color,thickness);
+			
+			ImVec2 perp;
+			ImVec2 direction = toPos - fromPos;
+			float len = sqrtf(direction.x * direction.x + direction.y * direction.y);
+			//skip division by zero
+			if (len == 0) continue;
+			//normalize
+			direction.x /= len; direction.y /= len;
+			perp = ImVec2(-direction.y, direction.x);
+
+			if (graph.isDirected()) {
+
+				float arrowSize = 10.0f;
+				ImVec2 tip = toPos - (direction * m_node_radius);
+				ImVec2 left = tip - direction * arrowSize + perp * (0.5f * arrowSize);
+				ImVec2 right = tip - direction * arrowSize - perp * (0.5f * arrowSize);
+				draw->AddTriangleFilled(tip, left, right, color);
+
+			}
+
+			//add edge weights 
+			ImVec2 mid = (fromPos + toPos) * 0.5f;
+			mid = mid + perp * m_weight_offset;
+
+
+			char buf[16];
+			snprintf(buf, sizeof(buf), "%d", edge.weight);
+			draw->AddText(mid, IM_COL32(255, 255, 0, 255), buf);
+		}
+	}
+	//draw nodes
+	for (const auto& [id, pos] : positions) {
+		ImVec2 drawPos(pos.x + windowPos.x, pos.y + windowPos.y);
+		draw->AddCircleFilled(drawPos, m_node_radius, IM_COL32(100, 200, 255, 255));
+
+		ImFont* font = ImGui::GetFont();
+		ImVec2 textSize = font->CalcTextSizeA(font->FontSize, FLT_MAX, 0.0f, id.c_str());
+		ImVec2 textPos = ImVec2(drawPos.x - (textSize.x * 0.5f), drawPos.y - (textSize.y * 0.5f));
+		draw->AddText(textPos, IM_COL32(0, 0, 0, 255), id.c_str());
+	}
+}
+
+
+
+
 void GraphDrawer::drawGraph() {
 	ImVec2 center = ImVec2( ImGui::GetWindowSize().x * 0.5f, ImGui::GetWindowSize().y * 0.5f);
 	drawGraph(layoutCircle(center, m_graph_size));
+}
+void GraphDrawer::drawGraph(std::set<std::pair<std::string ,std::string>> paths) {
+	ImVec2 center = ImVec2(ImGui::GetWindowSize().x * 0.5f, ImGui::GetWindowSize().y * 0.5f);
+	drawGraph(layoutCircle(center, m_graph_size),paths);
 }
 
 std::map<std::string, ImVec2> GraphDrawer::layoutCircle(ImVec2 center, float radius) {
